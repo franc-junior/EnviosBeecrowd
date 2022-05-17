@@ -1,0 +1,8 @@
+peca1 = int(input())
+numero1 = int(input())
+valor1 = float(input()) 
+peca2 = int(input())
+numero2 = int(input())
+valor2 = float(input())
+calculo = ((valor1 * numero1) + (valor2 * numero2)) 
+print("VALOR A PAGAR: R$ {:.2f}" .format(calculo)) 
