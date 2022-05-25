@@ -1,18 +1,23 @@
-n, d = map(int, input().split())
-lista = []
+while True:
+    n, d = map(int, input().split())
+    if n == d == 0:
+        break
+    t = "yes"
+    lista = [True]*n
+    for i in range(d):
+        caso = input().split()
+        for j in range(n):
+            if caso[j] == '0':
+                lista[j] = False
+    if True not in lista:
+        t = "no"
+    print(t)
 
-for i in range(d):
-    lista.append(input().split())
-for i in range(n):
-    res = 2
-    for j in range(n):
-        r = "yes"
-        if res == 2:
-            res = lista[j][i]
-        elif res != lista[j][i]:
-            res = "no"
-    if r == "yes":
-        print(r)
+        
+
+        
+
+
     
         
 
