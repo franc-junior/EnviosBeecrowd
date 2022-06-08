@@ -1,55 +1,65 @@
-
 class Labirinto():
     def __init__(self, m) -> None:
         self.matriz = m
         self.save = []
         self.jafoi = []
+
     def verificaLinha(self, col, lin):
-
-        i = col
-        j = lin
-    
-
-        self.jafoi.append([i, j])
-        if self.matriz[i][j] == 0:
-
-            #Esquerda
-            if (j > 0) and (self.matriz[i][j-1] == 0) and ([i,j-1] not in self.jafoi):
-                if ((j < 4) and (self.matriz[i][j+1] == 0) and ([i, j+1] not in self.jafoi)) or ((i < 4) and (self.matriz[i+1][j] == 0) and ([i+1, j] not in self.jafoi)):
-                    self.save.append([i, j])
-                return self.verificaLinha(i, j-1)
-
-            #Baixo
-            elif (i < 4) and (self.matriz[i+1][j] == 0) and ([i+1, j] not in self.jafoi):
-                if ((j > 0) and (self.matriz[i][j-1] == 0)) or ((j < 4 and self.matriz[i][j+1] == 0) and ([i, j+1] not in self.jafoi)):
-                    self.save.append([i+1, j])
-                return self.verificaLinha(i+1, j)
+        self.jafoi.append([col, lin])
         
-            #Direira
-            elif (j < 4) and (self.matriz[i][j+1] == 0) and ([i, j+1] not in self.jafoi):
-                if ((i < 4) and (self.matriz[i+1][j] == 0)) or ((j > 0) and (self.matriz[i][j-1] == 0)):
-                    self.save.append([i, j+1])
-                return self.verificaLinha(i, j+1)
-            
+        #print(col, lin)
+        #Final
+        if lin == col == 4:
+            return "COPS"
+        
+        elif self.matriz[col][lin] == 0:
+            esquerda = baixo = direita = cima = 0
+
+            #Verifica as possibilidades
+            if (lin > 0) and (self.matriz[col][lin-1] == 0) and ([col,lin-1] not in self.jafoi):
+                esquerda = 1
+            if (col < 4) and (self.matriz[col+1][lin] == 0) and ([col+1, lin] not in self.jafoi):
+                baixo = 1
+            if (lin < 4) and (self.matriz[col][lin+1] == 0) and ([col, lin+1] not in self.jafoi):
+                direita = 1
+            if (col > 0) and (self.matriz[col-1][lin] == 0) and ([col-1, lin] not in self.jafoi):
+                cima = 1
+
+            #Se existir mais que uma possibilidade salva a posição
+            if (esquerda + baixo + direita + cima) > 1:
+                self.save.append([col,lin])
+
+            #Movimenta para a poxima posição pela ordem de prioridade
+            if esquerda == 1:
+                return self.verificaLinha(col, lin-1)
+            elif baixo == 1:
+                return self.verificaLinha(col+1, lin)
+            elif direita == 1:
+                return self.verificaLinha(col, lin+1)
+            elif cima == 1:
+                return self.verificaLinha(col-1, lin)
+
             else:
-                if j == i == 4:
-                    print("Valeu o Boi")
-                    return "Valeu o boi"
-                elif self.save == []:
-                    return "Não valeu o boi"
-                    
+                if self.save == []:
+                    return "ROBBERS"
+
+                #Se não tiver mais para onde ir, irá volta para a ultima posição que tinha mais de um opção
                 c = self.save[len(self.save)-1]
                 del self.save[len(self.save)-1]
-                print(c[0], c[1])
                 return self.verificaLinha(c[0], c[1])
-          
-                
+        else:
+            return "ROBBERS"
 
+for f in range(int(input())):
+    matriz = []
+    labirinto = Labirinto(matriz)
+    c = 0
+    while c != 5:
+        lista =  input().split()
+        if len(lista) == 5:
+            matriz.append(list(map(int, lista)))
+            c+=1
 
-matriz = []
-labirinto = Labirinto(matriz)
-for i in range(5):
-    matriz.append(list(map(int, input().split())))
-
-labirinto = Labirinto(matriz)
-print(labirinto.verificaLinha(0, 0))
+    
+    labirinto = Labirinto(matriz)
+    print(labirinto.verificaLinha(0, 0))
