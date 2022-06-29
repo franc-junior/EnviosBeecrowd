@@ -5,8 +5,8 @@ class Labirinto():
         self.jafoi = []
 
     def verificaLinha(self, col, lin):
+
         self.jafoi.append([col, lin])
-        
         #print(col, lin)
         #Final
         if lin == col == 4:
@@ -43,7 +43,7 @@ class Labirinto():
                 if self.save == []:
                     return "ROBBERS"
 
-                #Se não tiver mais para onde ir, irá volta para a ultima posição que tinha mais de um opção
+                #Se não tiver mais para onde ir, irá voltar para a ultima posição que tinha mais de um opção
                 c = self.save[len(self.save)-1]
                 del self.save[len(self.save)-1]
                 return self.verificaLinha(c[0], c[1])
@@ -52,14 +52,12 @@ class Labirinto():
 
 for f in range(int(input())):
     matriz = []
-    labirinto = Labirinto(matriz)
     c = 0
     while c != 5:
-        lista =  input().split()
+        lista = input().split()
         if len(lista) == 5:
             matriz.append(list(map(int, lista)))
             c+=1
 
-    
     labirinto = Labirinto(matriz)
     print(labirinto.verificaLinha(0, 0))
