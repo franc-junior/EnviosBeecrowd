@@ -175,7 +175,7 @@ while True:
     cont+=v
     
     print(cont)
-    #Não consigo essa brucuta
+    #Não consigo essa bruc***
     
     print("um_circulo =", um_circulo,
     "\ndois_circulo =", dois_circulo,
